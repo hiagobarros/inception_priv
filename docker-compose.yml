@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./srcs/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - ./srcs/nginx/conf:/etc/nginx/conf.d
+      - wordpress_files:/var/www/html
+      - certs:/etc/nginx/certs
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+  wordpress:
+    build: ./srcs/wordpress
+    container_name: wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD_FILE: ${MYSQL_PASSWORD_FILE}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - wordpress_files:/var/www/html
+      - certs:/etc/nginx/certs
+    networks:
+      - inception_network
+    secrets:
+      - db_password
+    restart: unless-stopped
+
+  mariadb:
+    build: ./srcs/mariadb
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: ${MYSQL_ROOT_PASSWORD_FILE}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD_FILE: ${MYSQL_PASSWORD_FILE}
+    volumes:
+      - wordpress_db:/var/lib/mysql
+    networks:
+      - inception_network
+    secrets:
+      - db_root_password
+      - db_password
+    restart: unless-stopped
+
+volumes:
+  wordpress_files:
+  wordpress_db:
+  certs:
+
+networks:
+  inception_network:
+
+secrets:
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+  db_password:
+    file: ./secrets/db_password.txt
+
