@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Style Game - Game Boy</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        .gameboy-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background-image: url('game-boy-green.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px; /* Bordas arredondadas equilibradas */
+            overflow: hidden; /* Garante que a imagem respeite as bordas arredondadas */
+        }
+        
+        #gameCanvas {
+            position: absolute;
+            top: 54px; /* Ajustado para alinhar com a tela do Game Boy */
+            left: 51%;
+            transform: translateX(-50%);
+            width: 220px; /* Tamanho da tela do Game Boy - aumentado 10% */
+            height: 198px; /* Tamanho da tela do Game Boy - aumentado 10% */
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            background-color: #000;
+        }
+        
+        .instructions {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background-color: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .gameboy-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Sidebar para lista de tiles */
+        .tile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            transition: right 0.3s ease;
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tile-sidebar.open {
+            right: 0;
+        }
+        
+        .tile-sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 2001;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .tile-sidebar-toggle:hover {
+            background-color: #34495e;
+        }
+        
+        .tile-sidebar h3 {
+            margin-top: 0;
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .tile-category {
+            margin-bottom: 20px;
+        }
+        
+        .tile-category h4 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        .tile-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tile-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 6px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 50px;
+        }
+        
+        .tile-item canvas,
+        .tile-item img {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+        
+        .tile-item.walkable {
+            border-color: #27ae60;
+            background-color: rgba(39, 174, 96, 0.2);
+        }
+        
+        .tile-item.non-walkable {
+            border-color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.2);
+        }
+        
+        .tile-item.current {
+            border-color: #f39c12;
+            background-color: rgba(243, 156, 18, 0.3);
+            font-weight: bold;
+        }
+        
+        .tile-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+        }
+        
+        .tile-item button {
+            transition: background-color 0.2s ease;
+        }
+        
+        .tile-item button:hover {
+            opacity: 0.8;
+        }
+        
+        .save-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 2002;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .save-button:hover {
+            background-color: #219a52;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h3>Controles:</h3>
+        <p>W - Olhar/Mover para cima</p>
+        <p>S - Olhar/Mover para baixo</p>
+        <p>A - Olhar/Mover para esquerda</p>
+        <p>D - Olhar/Mover para direita</p>
+        <p><small>Clique rápido: apenas virar<br>Mantenha pressionado: virar + mover<br>Soltar tecla: parar após movimento atual</small></p>
+        <h4>Editor de Tiles:</h4>
+        <p>C - Ativar/Desativar modo clique</p>
+        <p>R - Resetar configuração de colisão</p>
+        <p><small>Modo ativo: clique nos tiles para alternar andável/não andável</small></p>
+        <h4>Sistema de Batalha:</h4>
+        <p>Tile 7 - Ativa batalha ao andar sobre ele</p>
+        <p>B - Forçar batalha (teste)</p>
+        <p><small>Ande sobre tiles 7 para encontrar Pokémon selvagens!</small></p>
+        <h4>Gerenciador de Layers:</h4>
+        <p>L - Alternar entre layers</p>
+        <p>A - Mostrar análise dos layers (console)</p>
+        <p><small>Analisa quais tiles pertencem a cada layer</small></p>
+    </div>
+    
+    <div class="gameboy-container">
+        <canvas id="gameCanvas" width="220" height="198"></canvas>
+        <div class="gameboy-overlay"></div>
+    </div>
+    
+    <!-- Botão para abrir/fechar sidebar -->
+    <button class="tile-sidebar-toggle" onclick="toggleTileSidebar()">Tiles</button>
+    
+    <!-- Botão para salvar configurações -->
+    <button class="save-button" onclick="saveTileConfig()">Salvar Config</button>
+    
+    <!-- Botão para resetar configurações -->
+    <button class="reset-button" onclick="resetCollisionConfig()" style="position: fixed; bottom: 60px; right: 20px; background-color: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 2002; font-size: 14px;">Resetar Colisão</button>
+    
+    <!-- Sidebar de tiles -->
+    <div class="tile-sidebar" id="tileSidebar">
+        <h3>Lista de Tiles</h3>
+        
+        <div class="tile-category">
+            <h4>Todos os Tiles do Mapa</h4>
+            <div class="tile-list" id="walkableTilesList">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+        
+        <div class="tile-category">
+            <h4>Tiles Bloqueados</h4>
+            <div class="tile-list" id="nonWalkableTilesList">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+        
+        <div class="tile-category">
+            <h4>Tile Atual</h4>
+            <div class="tile-list" id="currentTileInfo">
+                <!-- Será preenchido pelo JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="game2.js"></script>
+</body>
+</html>

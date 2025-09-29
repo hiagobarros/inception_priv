@@ -1,0 +1,15 @@
+{ "columns":8,
+ "image":"..\/..\/..\/..\/..\/Downloads\/Pokemon Essentials v21.1 2023-07-30\/Graphics\/Tilesets\/Outside.png",
+ "imageheight":16064,
+ "imagewidth":256,
+ "margin":0,
+ "name":"Outside",
+ "spacing":0,
+ "tilecount":4016,
+ "tiledversion":"1.11.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "transparentcolor":"#ff00e4",
+ "type":"tileset",
+ "version":"1.10"
+}

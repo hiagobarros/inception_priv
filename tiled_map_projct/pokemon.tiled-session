@@ -1,0 +1,126 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Outside.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Caves.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.2
+        },
+        "Game Boy Advance - Pokemon Emerald - Locations - Littleroot Town.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 0.64
+        },
+        "Game Boy Advance - Pokemon Emerald - Miscellaneous - Interior Tilesets.tsx": {
+            "scaleInDock": 0.9935,
+            "scaleInEditor": 0.6435
+        },
+        "Outside.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Playable-Character.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.2
+        },
+        "maptest.tmj": {
+            "scale": 1.6833,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 473.17768668686506,
+                "y": 225.1529733262045
+            }
+        },
+        "outside-map.json": {
+            "scale": 0.7739,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 609.897919627859,
+                "y": 639.6175216436231
+            }
+        },
+        "pokemon-gold-and-silver-versions-johto-game-boy-map.tsx": {
+            "scaleInDock": 0.2243,
+            "scaleInEditor": 1.2
+        },
+        "pokemon-johto-map.tsx": {
+            "scaleInDock": 0.2311,
+            "scaleInEditor": 1.2
+        },
+        "pokemon-johto-map.tsx.tmx": {
+            "scale": 0.6927,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3460.372455608489,
+                "y": 3574.41894037823
+            }
+        },
+        "tile-map-01.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.3292
+        },
+        "trainer_POKEMONTRAINER_Red.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "trainer_POKEMONTRAINER_Red.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "untitled.tmj": {
+            "scale": 1.4091,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 896.3167979561423,
+                "y": 669.2214888936201
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/hiago_barros/workspace/42/stone_5/inception/tiled_map_projct",
+    "last.imagePath": "/Users/hiago_barros/Downloads/Pokemon Essentials v21.1 2023-07-30/Graphics/Tilesets",
+    "map.height": 64,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 64,
+    "openFiles": [
+        "Game Boy Advance - Pokemon Emerald - Miscellaneous - Interior Tilesets.tsx",
+        "pokemon-gold-and-silver-versions-johto-game-boy-map.tsx",
+        "pokemon-johto-map.tsx",
+        "pokemon-johto-map.tsx.tmx",
+        "Playable-Character.tsx",
+        "Caves.tsx",
+        "untitled.tmj",
+        "trainer_POKEMONTRAINER_Red.json",
+        "outside-map.json",
+        "Outside.json"
+    ],
+    "project": "pokemon.tiled-project",
+    "recentFiles": [
+        "Game Boy Advance - Pokemon Emerald - Miscellaneous - Interior Tilesets.tsx",
+        "pokemon-gold-and-silver-versions-johto-game-boy-map.tsx",
+        "pokemon-johto-map.tsx",
+        "pokemon-johto-map.tsx.tmx",
+        "Playable-Character.tsx",
+        "Caves.tsx",
+        "untitled.tmj",
+        "trainer_POKEMONTRAINER_Red.json",
+        "outside-map.json",
+        "Outside.json",
+        "trainer_POKEMONTRAINER_Red.tsx",
+        "tile-map-01.tsx"
+    ],
+    "tileset.lastUsedFormat": "json",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    },
+    "tileset.transparentColor": "#ff00e4",
+    "tileset.useTransparentColor": true
+}

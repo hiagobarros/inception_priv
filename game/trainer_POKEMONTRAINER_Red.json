@@ -1,0 +1,15 @@
+{ "columns":4,
+ "image":"..\/..\/..\/..\/..\/Downloads\/Pokemon Essentials v21.1 2023-07-30\/Graphics\/Characters\/trainer_POKEMONTRAINER_Red.png",
+ "imageheight":192,
+ "imagewidth":128,
+ "margin":0,
+ "name":"trainer_POKEMONTRAINER_Red",
+ "spacing":0,
+ "tilecount":16,
+ "tiledversion":"1.11.2",
+ "tileheight":48,
+ "tilewidth":32,
+ "transparentcolor":"#ff00e4",
+ "type":"tileset",
+ "version":"1.10"
+}
