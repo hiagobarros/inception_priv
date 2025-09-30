@@ -1,30 +1,13 @@
-FROM alpine:3.18
+# Usando uma imagem base do MariaDB
+FROM mariadb:10.5
 
-# Install MariaDB
-RUN apk update && apk add --no-cache \
-    mariadb \
-    mariadb-client \
-    mariadb-common
-
-# Create necessary directories
-RUN mkdir -p /var/lib/mysql /var/log/mysql /run/mysqld
-
-# Set proper permissions
-RUN chown -R mysql:mysql /var/lib/mysql /var/log/mysql /run/mysqld
-
-# Copy MariaDB configuration
-COPY conf/my.cnf /etc/mysql/my.cnf
-
-# Copy initialization script
-COPY tools/init-db.sh /docker-entrypoint-initdb.d/init-db.sh
-RUN chmod +x /docker-entrypoint-initdb.d/init-db.sh
-
-# Create socket directory
-RUN mkdir -p /run/mysqld && \
-    chown mysql:mysql /run/mysqld
-
-# Expose port 3306
+# Expor a porta 3306 para comunicação com o WordPress
 EXPOSE 3306
 
-# Start MariaDB
-CMD ["mysqld", "--user=mysql", "--console"]
+# Definir variáveis de ambiente (você vai definir essas no .env)
+ENV MYSQL_ROOT_PASSWORD=example
+ENV MYSQL_DATABASE=wordpress
+ENV MYSQL_USER=wordpress_user
+ENV MYSQL_PASSWORD=wordpress_pass
+
+# O MariaDB já tem o entrypoint configurado, então não precisamos mudar nada

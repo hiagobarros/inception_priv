@@ -1,0 +1,21 @@
+.
+├── Makefile
+├── secrets/
+│   ├── credentials.txt
+│   ├── db_password.txt
+│   └── db_root_password.txt
+├── srcs/
+│   ├── docker-compose.yml
+│   ├── .env
+│   ├── requirements/
+│   │   ├── mariadb/
+│   │   │   ├── Dockerfile
+│   │   │   ├── .dockerignore
+│   │   │   └── conf/
+│   │   ├── nginx/
+│   │   │   ├── Dockerfile
+│   │   │   ├── .dockerignore
+│   │   │   └── conf/
+│   │   └── wordpress/
+│   │       ├── Dockerfile
+│   │       └── .dockerignore

@@ -1,25 +1,15 @@
-FROM alpine:3.18
+# Usando a imagem Alpine com NGINX
+FROM nginx:alpine
 
-# Install nginx and openssl
-RUN apk update && apk add --no-cache nginx openssl
+# Copiando os arquivos de configuração do NGINX para o container
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
-# Create necessary directories
-RUN mkdir -p /var/www/html /etc/nginx/ssl /var/log/nginx /var/lib/nginx/tmp
+# Instalar OpenSSL para suportar TLS 1.2 ou 1.3
+RUN apk update && apk add openssl
 
-# Generate self-signed SSL certificate
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/nginx/ssl/nginx-selfsigned.key \
-    -out /etc/nginx/ssl/nginx-selfsigned.crt \
-    -subj "/C=BR/ST=SP/L=SaoPaulo/O=42/OU=School/CN=hiago_barros.42.fr"
-
-# Copy nginx configuration
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-# Set proper permissions
-RUN chown -R nginx:nginx /var/www/html /var/log/nginx /var/lib/nginx
-
-# Expose port 443
+# Expor a porta 443 para HTTPS
 EXPOSE 443
 
-# Start nginx
+# Definir um entrypoint padrão (não é necessário mudar)
 CMD ["nginx", "-g", "daemon off;"]
